@@ -1,0 +1,9 @@
+torch==2.6.0
+torchvision==0.21.0
+timm==0.9.12
+opencv-python-headless
+Pillow
+matplotlib
+opencv-python-headless
+scikit-image
+lime
