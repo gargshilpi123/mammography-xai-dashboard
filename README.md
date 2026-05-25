@@ -27,28 +27,82 @@ This project combines Vision Transformers and DenseNet for breast cancer detecti
 * scikit-learn
 * LIME
 
-## Run Locally
 
-```bash
-pip install -r requirements.txt
-python app.py
-```
 
-## Screenshots
+## Explainable AI (XAI) Techniques
 
-### Dashboard
+This project uses multiple Explainable AI (XAI) methods to visualize and interpret the model’s decision-making process for mammography classification.
 
-![Dashboard](screenshots/dashboard.png)
+### 1. GradCAM++
 
-### Prediction & XAI Output
+GradCAM++ is applied on the DenseNet121 feature maps to identify the most influential regions responsible for the prediction.
 
-![Prediction](screenshots/prediction.png)
+* Uses second-order gradients for improved localization.
+* Highlights suspicious tumor regions spatially.
+* Produces heatmaps showing where the CNN focuses most.
+* Better than traditional GradCAM for multiple or small lesions.
 
-## Live Demo
+In the visualization:
 
-https://huggingface.co/spaces/shilpigarghere/XAI_Mammo
+* Red/Yellow regions → high importance
+* Blue regions → low importance
 
-## Research Status
+This helps radiologists understand which breast regions contributed most to the malignant prediction.
 
-Research manuscript currently in preparation / under review.
+---
+
+### 2. Attention Rollout (Vision Transformer)
+
+Attention Rollout visualizes how the Vision Transformer (ViT) attends to different image patches across all transformer layers.
+
+* Combines attention maps from all 12 transformer layers.
+* Tracks cumulative patch importance using residual connections.
+* Shows global contextual understanding of the mammogram.
+
+Unlike CNNs that focus locally, ViT attention captures long-range dependencies and overall breast structure.
+
+In the visualization:
+
+* Bright regions → highly attended image patches
+* Dark regions → less important patches
+
+This provides insight into how the transformer interprets the mammogram globally.
+
+---
+
+### 3. LIME (Local Interpretable Model-Agnostic Explanations)
+
+LIME explains predictions by perturbing image superpixels and observing how the prediction changes.
+
+* Divides the image into interpretable superpixels.
+* Identifies which regions positively or negatively influence prediction.
+* Model-agnostic explanation technique.
+
+In the visualization:
+
+* Red regions → support malignant prediction
+* Green regions → support benign prediction
+
+LIME provides human-understandable local explanations and increases transparency of the AI system.
+
+---
+
+## Why XAI is Important in Medical Imaging
+
+Explainability is critical in healthcare applications because doctors must understand why an AI system makes a prediction.
+
+The combination of:
+
+* GradCAM++ (CNN spatial attention)
+* Attention Rollout (Transformer attention)
+* LIME (local interpretable explanations)
+
+improves:
+
+* Model transparency
+* Clinical trust
+* Decision interpretability
+* Reliability in breast cancer diagnosis
+
+This hybrid XAI framework helps bridge the gap between deep learning predictions and medical understanding.
 
